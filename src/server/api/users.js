@@ -41,3 +41,5 @@ usersRouter.post ('/login', async (req,res,next) => {
     next(err)
   }
 })
+
+module.exports = usersRouter

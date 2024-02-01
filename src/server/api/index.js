@@ -2,12 +2,12 @@ const express = require('express');
 const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const { getUserById } = require ('../db')
-// const {JWT_SECRET = 'password'} = process.env
+const {JWT_SECRET = 'password'} = process.env
 
 const volleyball = require ('volleyball')
 apiRouter.use(volleyball)
 
-apiRouter.use ( async (req,res,next) => {
+apiRouter.use ( async (req, res, next) => {
   const prefix = 'Bearer ';
   const auth = req.header ('Authorization');
 
