@@ -17,7 +17,6 @@ usersRouter.post ('/login', async (req,res,next) => {
     });
   }
   try {
-    console.log (`getting user with the following email ${email}...`)
     const user = await getUser({email, password});
     if (user) {
       const token = jwt.sign ({

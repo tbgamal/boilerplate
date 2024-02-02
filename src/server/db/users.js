@@ -24,7 +24,6 @@ const getUser = async({email,password}) => {
     return;
   }
   try {
-    console.log (`getting user with this email ${email}....`)
     const user = await getUserByEmail(email);
     if(!user) return;
     const hashedPassword = user.password;
@@ -41,7 +40,6 @@ const getUser = async({email,password}) => {
 const getUserByEmail = async(email) => {
   try {
 
-    console.log (`this is the email you're looking for ${ email }...`)
       const { rows: [ user ] } = await db.query(`
       SELECT * 
       FROM users
