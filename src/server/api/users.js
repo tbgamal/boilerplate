@@ -17,6 +17,7 @@ usersRouter.post ('/login', async (req,res,next) => {
     });
   }
   try {
+    console.log (`getting user with the following email ${email}...`)
     const user = await getUser({email, password});
     if (user) {
       const token = jwt.sign ({
@@ -39,6 +40,41 @@ usersRouter.post ('/login', async (req,res,next) => {
     }
   } catch (err) {
     next(err)
+  }
+})
+
+usersRouter.post('/register', async(req, res, next) => {
+  const { name, email, password, } = req.body;
+
+  try {
+      const _user = await getUserByEmail(email);
+
+      if(_user) {
+          next({
+              name: 'UserExistsError',
+              message: 'A user with that email already exists'
+          });
+      }
+
+      const user = await createUser({
+          name,
+          email,
+          password
+      });
+
+      const token = jwt.sign({
+          id: user.id,
+          email: user.email
+      }, process.env.JWT_SECRET, {
+          expiresIn: '1w'
+      });
+
+      res.send({
+          message: 'Sign up successful!',
+          token
+      });
+  } catch({name, message}) {
+      next({name, message});
   }
 })
 
